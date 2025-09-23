@@ -1,0 +1,2 @@
+- Contains documentation on the application & edge cases to be considered + docs on testing 
+- the pandas library gets all TABLES, when a table is has wikitable than it's a specific TYPE of table 
