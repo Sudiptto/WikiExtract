@@ -37,3 +37,10 @@ Notes:
 
 Notes:
 - Issue single column may not have the same length could be issues in column 
+
+#7) 
+![alt text](images/headingMisCalculation.png)
+
+How it looks like on the web: ![alt text](images/bangladeshHeadingPage.png)
+Notes:
+- In this case the pandas libary isn't properly attending to what the correct heading is, it has 3 different headings but there could really only be one consice heading. The edge case here is that the last heading (third row) is just REPEATED, ie it's BOLDED, provisional government of bangladesh also counted as a heading.
