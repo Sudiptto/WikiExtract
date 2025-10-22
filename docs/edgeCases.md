@@ -27,7 +27,13 @@ https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Bangladesh (Table 1)
 Source: 
 https://en.wikipedia.org/wiki/List_of_sultans_of_the_Ottoman_Empire 
 
-
+#5) 
+![alt text](image.png)
 
 Notes:
 - Wikipedia MP cannot properly parse out the images, import wikipedia
+
+#6) ![alt text](images/image.png)
+
+Notes:
+- Issue single column may not have the same length could be issues in column 

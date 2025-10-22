@@ -13,7 +13,11 @@ from wiki_extractor import WikiTableExtract
 
 TEST_CASES = [
     ("https://en.wikipedia.org/wiki/List_of_prime_ministers_of_India", 1),
-    ("https://en.wikipedia.org/wiki/List_of_presidents_of_the_United_States", 1)
+    ("https://en.wikipedia.org/wiki/List_of_presidents_of_the_United_States", 1),
+    ("https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Bangladesh", 0),
+    # NOTE DEBUG THIS SPECIFIC CASE HERE
+    ("https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Bangladesh", 1)
+
 ]
 
 
