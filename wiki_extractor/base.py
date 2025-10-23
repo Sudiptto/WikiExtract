@@ -3,17 +3,20 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from .extract_html import extract_all_html_helper
 
-
+# one wiki-table 
 class WikiTableExtract:
-    def __init__(self, url: str):
+    def __init__(self, url: str, table_number: int = 0):
         self.url = url
         self.soup = None
         self.tables = []
         self.headings = []
+        self.data_frame = None
+        self.table_number = table_number
 
         self._fetch_page()
 
-    def _fetch_page(self) -> None:
+    def _fetch_page(self):
+        """Fetch the HTML of the page and find all <table> elements."""
         headers = {
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -21,27 +24,37 @@ class WikiTableExtract:
                 "Chrome/120.0.0.0 Safari/537.36"
             )
         }
-        page = requests.get(self.url, headers=headers).text
-        self.soup = BeautifulSoup(page, "html.parser")
+        response = requests.get(self.url, headers=headers)
+        response.raise_for_status()
+
+        self.soup = BeautifulSoup(response.text, "html.parser")
         self.tables = self.soup.find_all("table")
 
-    def get_table(self, table_number: int = 0, path: str | None = None) -> pd.DataFrame:
-        if table_number >= len(self.tables):
+
+    def _load_dataframe(self):
+        """Load the specified table into a pandas DataFrame."""
+        if not self.tables:
+            raise ValueError("No tables found on this page.")
+
+        if self.table_number >= len(self.tables):
             raise IndexError(
-                f"Table index {table_number} out of range. "
-                f"Only {len(self.tables)} found."
+                f"Table index {self.table_number} out of range. "
+                f"Only {len(self.tables)} table(s) found."
             )
 
-        table_html = str(self.tables[table_number])
-        df = pd.read_html(table_html)[0]
+        table_html = str(self.tables[self.table_number])
+        self.data_frame = pd.read_html(table_html)[0]
 
-        if path:
-            df.to_html(path, index=False)
-            print(f"Table {table_number} saved to {path}")
 
-        #print(f"Table {table_number} has {len(df)} rows and {len(df.columns)} columns")
+    # heading is going to take
+    def get_heading(self, table_number: int = 0):
+        # check if db has been parsed alr
+        if not self.data_frame:
+            table_html = str(self.tables[table_number])
+            self.data_frame = df = pd.read_html(table_html)[0]
 
-        return df
+
+        pass
     
     def get_Table_length(self, table_number: int = 0) -> int:
         df = self.get_table(table_number, path=None)
