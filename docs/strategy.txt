@@ -1,0 +1,3 @@
+Page to write my thoughts:
+
+In this case we have several different edges cases, the first applicable action is to parse out the headings properly, find out which rows and stuff are the headings, in this case we can 

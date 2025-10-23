@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
-from .extract_images import extract_with_images_helper
+from .extract_html import extract_all_html_helper
 
 
 class WikiTableExtract:
@@ -9,6 +9,7 @@ class WikiTableExtract:
         self.url = url
         self.soup = None
         self.tables = []
+        self.headings = []
 
         self._fetch_page()
 
@@ -49,13 +50,13 @@ class WikiTableExtract:
 
         
 
-    def extract_with_images(self, table_number: int = 0) -> list[list[str]]:
+    def extract_all_html(self, table_number: int = 0) -> list[list[str]]:
         """
         Extract rows that contain images, using helper function.
         """
-        return extract_with_images_helper(self.tables, table_number) 
+        return extract_all_html_helper(self.tables, table_number) 
     
     
     def extract_with_image_length(self, table_number: int = 0) -> list:
-        rows = extract_with_images_helper(self.tables, table_number) 
+        rows = extract_all_html_helper(self.tables, table_number) 
         return [len(rows[1:]), len(rows[1])]
