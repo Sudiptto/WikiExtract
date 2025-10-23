@@ -1,3 +1,4 @@
 """"
 Function is meant to get the headings of a wikipedia table -> represents the valid length of a ROW ...
 """
+
