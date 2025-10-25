@@ -28,6 +28,8 @@ def extract_all_html_helper(tables, table_number: int = 0) -> list[list[str]]:
             # Default content (text or image)
             file_span = cell.find("span", {"typeof": "mw:File"})
             img_tag = file_span.find("img") if file_span else cell.find("img")
+            #rowspan=cell.get('rowspan', '')
+            #print("ROWSPAN: ", rowspan)
 
             if img_tag:
                 src = img_tag.get("srcset", img_tag.get("src", ""))
@@ -41,16 +43,22 @@ def extract_all_html_helper(tables, table_number: int = 0) -> list[list[str]]:
 
             # Check for solid-color bar (background-color)
             style = cell.get("style", "")
+
             if "background-color" in style:
                 for part in style.split(";"):
+
                     if "background-color" in part:
+
                         color_value = part.split(":")[-1].strip()
+
                         if color_value:
                             content = color_value  # replace cell with color
-                            #print(
-                            #    f"[{i}] Found color cell → {color_value}, rowspan={cell.get('rowspan', '')}"
-                            #)
+                            '''print(
+                                f"[{i}] Found color cell → {color_value}, rowspan={cell.get('rowspan', '')}"
+                            )'''
                             break
+
+                            
 
             # Append plain content (keep empty as "")
             row_data.append(content)

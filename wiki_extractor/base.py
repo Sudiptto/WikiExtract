@@ -55,7 +55,7 @@ class WikiTableExtract:
             )
 
         table_html = str(self.tables[self.table_number])
-        self.data_frame = pd.read_html(table_html)[0]
+        self.data_frame = pd.read_html(table_html, flavor="bs4")[0]
         
     def _set_heading(self):
         """Extract multi-level headings as a list of lists (matrix form)."""
@@ -92,7 +92,7 @@ class WikiTableExtract:
 
             for j in range(1, len(row)):
                 if row[j] == row[j-1]:
-                    print(row[j], row[j-1])
+                    #print(row[j], row[j-1])
                     valid = False
                     break  
 
@@ -107,23 +107,17 @@ class WikiTableExtract:
     def get_heading(self):
         # check if db has been parsed alr
         return self.headings
-
-
     
-    def get_Table_length(self, table_number: int = 0) -> int:
-        df = self.get_table(table_number, path=None)
-        rows, cols = df.shape
-        return [rows, cols]
 
+    # get dataframes
+    def get_data_frames(self):
+        return self.data_frame
         
 
-    def extract_all_html(self, table_number: int = 0) -> list[list[str]]:
+    def extract_all_html(self) -> list[list[str]]:
         """
         Extract rows that contain images, using helper function.
         """
-        return extract_all_html_helper(self.tables, table_number) 
+        return extract_all_html_helper(self.tables, self.table_number) 
     
     
-    def extract_with_image_length(self, table_number: int = 0) -> list:
-        rows = extract_all_html_helper(self.tables, table_number) 
-        return [len(rows[1:]), len(rows[1])]
